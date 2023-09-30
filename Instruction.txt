@@ -1,0 +1,64 @@
+Issue 1 :-
+----------
+
+ for this issue :- backend.js:2139 EventEmitter.removeListener('change', ...): Method has been deprecated. Please instead use `remove()` on the subscription returned by `EventEmitter.addListener`.
+
+follow this path to resolve the issue :-
+
+  step 1)  node_modules/raect-native-paper/src/components/Menu/Menu.tsx
+
+  1. assign the var dimesionListener
+  2. comment line no. 254 and new code 
+
+       // Dimensions.addEventListener('change', this.handleDismiss);
+    dimesionListener =  Dimensions.addEventListener('change', this.handleDismiss);
+
+  3.comment line no. 253 and new code 
+
+     // Dimensions.removeEventListener('change', this.handleDismiss);
+   try{
+    dimesionListener.remove(); 
+   }
+   catch(err)
+   {
+     
+   }
+
+
+step 2) node_modules/raect-native-paper/src/core/Provider.tsx
+ 
+1. assign the var AccessibilityInfoListener and var AppearanceListener
+  
+2. comment line no. 42 t0 45 and new code 
+
+    //  AccessibilityInfo.addEventListener(
+    //     'reduceMotionChanged',
+    //     setReduceMotionEnabled
+    //   );
+
+      AccessibilityInfoListener =   AccessibilityInfo.addEventListener(
+        'reduceMotionChanged',
+        setReduceMotionEnabled
+      );
+
+3.comment line no. 53 to 56 and new code 
+
+        // AccessibilityInfo.removeEventListener(
+        //   'reduceMotionChanged',
+        //   setReduceMotionEnabled
+        // );
+
+        AccessibilityInfoListener.remove(); 
+
+4. comment line no. 64 and new code 
+
+  //  Appearance?.addChangeListener(handleAppearanceChange);
+    AppearanceListener =  Appearance?.addChangeListener(handleAppearanceChange);
+
+ 5. comment line no. 68 and new code   
+
+   // Appearance?.removeChangeListener(handleAppearanceChange);
+        AppearanceListener.remove(); 
+
+
+   ---------------------------------------------------------------------------------------------------------------------------     
